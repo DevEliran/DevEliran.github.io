@@ -1,1 +1,2 @@
 #README
+ Run plotting.py
