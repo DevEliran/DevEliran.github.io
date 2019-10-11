@@ -4,3 +4,5 @@ Expenses Detective is an app that allows to to sumbit your current account on va
 It also lets you keep track on your daily spendings. 
 
 It's a work in progress  ; Will be updating soon.
+
+11/10/19 update : Transfer cash between your accounts available.
