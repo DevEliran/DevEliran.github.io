@@ -3,6 +3,7 @@ from exp_det import Database
 from exp_det import Database_acc
 import random
 from tkinter import ttk
+from tkinter import messagebox
 
 cat_list=['groceries','shopping','bills','gym','electronics','car','hairstyle']
 cat_list_new=['Auto','Entertainment','Groceries','Household','Investments','Misc','Utilities']
@@ -180,93 +181,24 @@ def amount_window_creation():
     save_button2.pack()
     update_window.mainloop()
 
-def transfer_win_creation():
-    global transfer_window , banks , accCombo ,selected_acc
-    transfer_window=Tk()
-    transfer_window.iconbitmap(default="investor.ico")
-    transfer_window.minsize(350,200)
-    transfer_window.maxsize(350,200)
-    transfer_window.wm_title("Transfer Cash")
-    transfer_window.geometry("350x200")
+def get_selected_acc(event):
+    global selected_acc
+    selected_acc=accCombo.get()
+    print(selected_acc)
 
-    l_bank_name_from=ttk.Label(transfer_window,text="From :  ")
-    l_bank_name_from.pack()
-
-    bank_from_entry=ttk.Entry(transfer_window,width=100)
-    bank_from_entry.pack()
-    bank_from_entry.delete(0,END)
-    bank_from_entry.configure(state=NORMAL)
-    bankFROM=db_acc.get_bank_by_iid(iid)[0][0]
-
-    bank_nameVar = StringVar()
-    banks = ttk.Combobox(transfer_window, textvariable=bank_nameVar)
-    banks.bind('<<ComboboxSelected>>', get_selected_bank)
-
-    l_bank_name_to=ttk.Label(transfer_window,text="To :  ")
-    l_bank_name_to.pack()
-
-    if str(tree.parent(iid)) == 'A':
-        bank_from_entry.insert(0,'Cash , '+str(bankFROM))
-        a='Cash'
-        db_acc.cur.execute("SELECT account,bank FROM accounts WHERE  bank != ? OR account != ?",(bankFROM,a))
-        b=db_acc.cur.fetchall()
-        print (b)
-        banks['values']=(b)
-        banks.pack()
-    if str(tree.parent(iid)) == 'B':
-        bank_from_entry.insert(0,'Chequing , '+str(bankFROM))
-        a='Chequing'
-        db_acc.cur.execute("SELECT account , bank FROM accounts WHERE  bank != ? OR account != ?",(bankFROM,a))
-        b=db_acc.cur.fetchall()
-        print (b)
-        banks['values']=(b)
-        banks.pack()
-    if str(tree.parent(iid)) == 'C':
-        bank_from_entry.insert(0,'Credit card , '+str(bankFROM))
-        a='Credit card'
-        db_acc.cur.execute("SELECT account , bank FROM accounts WHERE  bank != ? OR account != ?",(bankFROM,a))
-        b=db_acc.cur.fetchall()
-        print (b)
-        banks['values']=(b)
-        banks.pack()
-    if str(tree.parent(iid)) == 'D':
-        bank_from_entry.insert(0,'Savings , '+str(bankFROM))
-        a='Savings'
-        db_acc.cur.execute("SELECT account , bank FROM accounts WHERE  bank != ? OR account != ?",(bankFROM,a))
-        b=db_acc.cur.fetchall()
-        print (b)
-        banks['values']=(b)
-        banks.pack()
-
-    bank_from_entry.configure(state='readonly')
-
-
-    #acc_nameVar = StringVar()
-    #accCombo = ttk.Combobox(transfer_window, textvariable=acc_nameVar)
-    #accCombo.bind('<<ComboboxSelected>>', get_selected_acc)
-    #accCombo['values']=('Cash','Chequing','Credit card','Savings')
-    #accCombo.pack()
-
-    amountVar=StringVar()
-    l_amount=ttk.Label(transfer_window,text="Enter amount : ")
-    l_amount.pack()
-    amount_entry=ttk.Entry(transfer_window,textvariable=amountVar)
-    amount_entry.pack()
-
-    save_button1=ttk.Button(transfer_window,text="Save",width=20,command=lambda:add_account(bank_name_entry.get(),amount_entry.get(),account_entry.get()))
-    save_button1.pack()
-    transfer_window.mainloop()
 
 def get_selected_bank(event):
     global selected_bank
     selected_bank=banks.get()
+    print(selected_bank)
 
-def get_selected_acc(event):
-    global selected_acc
-    selected_acc=accCombo.get()
 
-def transfer_cash(bank1,bank2,amount):
-    pass
+
+def transfer_cash(accFrom,accTo,bankFrom,bankTo,amount):
+    msg=db_acc.transfer(accFrom,accTo,bankFrom,bankTo,amount)
+    messagebox.showinfo(" ", msg)
+    tree.delete(*tree.get_children())
+    build_tree()
 
 def update_amount(id,amount):
     db_acc.update_cash(id,amount)
@@ -288,7 +220,7 @@ def clear_entries():
 
 def build_tree():
     #TREE LEVEL 1
-    cash_folder=tree.insert('',1,'A',text="Cash",values=("$0",))
+    cash_folder=tree.insert('',1,'A',text="Cash",values=("$"+str(db_acc.get_cash_amount()),))
     cheq_folder=tree.insert('',2,'B',text="Chequing",values=("$"+str(db_acc.get_cheq_amount()),))
     credit_folder=tree.insert('',3,'C',text="Credit card",values=("$"+str(db_acc.get_credit_amount()),))
     savings_folder=tree.insert('',4,'D',text="Savings",values=("$"+str(db_acc.get_savings_amount()),))
@@ -372,7 +304,6 @@ popup=Menu(acc_tab,tearoff=0)
 popup.add_command(label="Rename",command=rename_window_creation)#for level 2
 popup.add_command(label="Update amount",command=amount_window_creation)
 popup.add_command(label="Delete account",command=delete_account)
-popup.add_command(label="Transfer cash",command=transfer_win_creation)
 
 popup1=Menu(acc_tab,tearoff=0)
 popup1.add_command(label="Add account",command=add_window_creation)#for level 1
@@ -380,6 +311,48 @@ popup1.add_command(label="Add account",command=add_window_creation)#for level 1
 tree.bind("<Button-3>",do_popup)
 tree.bind("<ButtonRelease-3>",get_selcted_row_tree)
 tree.bind("<ButtonRelease-1>",get_selcted_row_tree)
+
+
+transfer_label=ttk.Label(acc_tab,text="Transfer Money Between Accounts : ")
+transfer_label.place(x=150, y=285,width=200,height=25)
+from_header=ttk.Label(acc_tab,text="From :")
+from_header.place(x=50,y=320,width=150,height=25)
+to_header=ttk.Label(acc_tab,text="To :")
+to_header.place(x=240,y=320,width=150,height=25)
+#FROM SECTION
+transfer_from_label_acc=ttk.Label(acc_tab,text="Account :")
+transfer_from_label_acc.place(x=0 , y=350,width=150,height=25)
+transfer_from_var_acc=StringVar()
+transfer_from_entry_acc=ttk.Entry(acc_tab,textvariable=transfer_from_var_acc)
+transfer_from_entry_acc.place(x=60,y=350,width=100,height=25)
+
+transfer_from_label_bank=ttk.Label(acc_tab,text="Bank :")
+transfer_from_label_bank.place(x=0 , y=380,width=150,height=25)
+transfer_from_var_bank=StringVar()
+transfer_from_entry_bank=ttk.Entry(acc_tab,textvariable=transfer_from_var_bank)
+transfer_from_entry_bank.place(x=60,y=380,width=100,height=25)
+
+#TO SECTION
+transfer_to_label_acc=ttk.Label(acc_tab,text="Account :")
+transfer_to_label_acc.place(x=180 , y=350,width=150,height=25)
+transfer_to_var_acc=StringVar()
+transfer_to_entry_acc=ttk.Entry(acc_tab,textvariable=transfer_to_var_acc)
+transfer_to_entry_acc.place(x=240,y=350,width=100,height=25)
+
+transfer_to_label_bank=ttk.Label(acc_tab,text="Bank :")
+transfer_to_label_bank.place(x=180 , y=380,width=150,height=25)
+transfer_to_var_bank=StringVar()
+transfer_to_entry_bank=ttk.Entry(acc_tab,textvariable=transfer_to_var_bank)
+transfer_to_entry_bank.place(x=240,y=380,width=100,height=25)
+
+amount_label=ttk.Label(acc_tab,text="Amount :")
+amount_label.place(x=360,y=365,width=100,height=25)
+amount_var=StringVar()
+amount_entry=ttk.Entry(acc_tab,textvariable=amount_var)
+amount_entry.place(x=425,y=365,width=100,height=25)
+
+commit_transfer=ttk.Button(acc_tab,text="Commit Transfer",command=lambda:transfer_cash(transfer_from_entry_acc.get(),transfer_to_entry_acc.get(),transfer_from_entry_bank.get(),transfer_to_entry_bank.get(),amount_entry.get()))
+commit_transfer.place(x=350,y=400,width=100,height=25)
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 #ADD\UPDATE TAB
 lb=Listbox(db_tab,height=15,width=30,exportselection=False)

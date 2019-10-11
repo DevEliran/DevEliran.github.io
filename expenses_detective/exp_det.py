@@ -1,6 +1,7 @@
 import sqlite3
 import datetime
 import time
+import sys
 
 
 class Database:
@@ -147,10 +148,34 @@ class Database_acc:
             sum3+=int(credit_amount[i][0])
         return sum3
 
+    def get_cash_amount(self):
+        self.cur.execute("SELECT SUM(amount) FROM accounts GROUP BY id HAVING account=?",("Cash",))
+        cash_amount=self.cur.fetchall()
+        sum4=0
+        for i in range(len(cash_amount)):
+            sum4+=int(cash_amount[i][0])
+        return sum4
+
     def get_account_by_iid(self,iid):
         self.cur.execute("SELECT account FROM accounts WHERE iid=?",(iid,))
         rows=self.cur.fetchall()
         return rows
 
-    def transfer(bank1,bank2,amount):
-        self.cur.execute()
+    def transfer(self,accFrom,accTo,bankFrom,bankTo,amount):
+        try:
+            self.cur.execute("SELECT amount FROM accounts WHERE account=? AND bank=?",(accFrom.capitalize(),bankFrom))
+            amount_from=self.cur.fetchall()
+            print(amount_from)
+            self.cur.execute("SELECT amount FROM accounts WHERE account=? AND bank=?",(accTo.capitalize(),bankTo))
+            amount_to=self.cur.fetchall()
+            print(amount_to)
+            self.cur.execute("UPDATE accounts SET amount=? WHERE account=? AND bank=?",(int(amount_to[0][0])+int(amount),accTo.capitalize(),bankTo))
+            self.cur.execute("UPDATE accounts SET amount=? WHERE account=? AND bank=?",(int(amount_from[0][0])-int(amount),accFrom.capitalize(),bankFrom))
+            self.con.commit()
+            return "Transfer Completed"
+
+        except IndexError:
+            if(sys.exc_info()[-1].tb_lineno)==172:
+                return "{} account dosen't have bank {}".format(accTo,bankTo)
+            if(sys.exc_info()[-1].tb_lineno)==173:
+                return "{} account dosen't have bank {}".format(accFrom,bankFrom)
