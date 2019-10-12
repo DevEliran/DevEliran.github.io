@@ -6,3 +6,5 @@ It also lets you keep track on your daily spendings.
 It's a work in progress  ; Will be updating soon.
 
 11/10/19 update : Transfer cash between your accounts available.
+
+Icon made by Eucalyp from www.flaticon.com
