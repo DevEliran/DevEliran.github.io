@@ -161,7 +161,7 @@ class Database_acc:
         rows=self.cur.fetchall()
         return rows
 
-    def transfer(self,accFrom,accTo,bankFrom,bankTo,amount):
+    def transfer(self,accFrom,accTo,bankFrom,bankTo,amount,radio_var):
         try:
             self.cur.execute("SELECT amount FROM accounts WHERE account=? AND bank=?",(accFrom.capitalize(),bankFrom))
             amount_from=self.cur.fetchall()
@@ -170,7 +170,10 @@ class Database_acc:
             amount_to=self.cur.fetchall()
             print(amount_to)
             self.cur.execute("UPDATE accounts SET amount=? WHERE account=? AND bank=?",(int(amount_to[0][0])+int(amount),accTo.capitalize(),bankTo))
-            self.cur.execute("UPDATE accounts SET amount=? WHERE account=? AND bank=?",(int(amount_from[0][0])-int(amount),accFrom.capitalize(),bankFrom))
+            if int(amount_from[0][0])-int(amount)<0 and radio_var==2:
+                return "Negative amount isn't allowed"
+            else:
+                self.cur.execute("UPDATE accounts SET amount=? WHERE account=? AND bank=?",(int(amount_from[0][0])-int(amount),accFrom.capitalize(),bankFrom))
             self.con.commit()
             return "Transfer Completed"
 

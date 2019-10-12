@@ -194,8 +194,8 @@ def get_selected_bank(event):
 
 
 
-def transfer_cash(accFrom,accTo,bankFrom,bankTo,amount):
-    msg=db_acc.transfer(accFrom,accTo,bankFrom,bankTo,amount)
+def transfer_cash(accFrom,accTo,bankFrom,bankTo,amount,radioChoice):
+    msg=db_acc.transfer(accFrom,accTo,bankFrom,bankTo,amount,radioChoice)
     messagebox.showinfo(" ", msg)
     tree.delete(*tree.get_children())
     build_tree()
@@ -217,6 +217,16 @@ def clear_entries():
     e3.configure(state=NORMAL)
     e3.delete(0,END)
     e3.configure(state='readonly')
+
+def clear_transfer_entries():
+     transfer_from_entry_acc.delete(0,END)
+     transfer_from_entry_bank.delete(0,END)
+     transfer_to_entry_acc.delete(0,END)
+     transfer_to_entry_bank.delete(0,END)
+     amount_entry.delete(0,END)
+
+def show_choice():
+    print(radio_var.get())
 
 def build_tree():
     #TREE LEVEL 1
@@ -281,12 +291,14 @@ tabControl.add(queries_tab,text="Queries")
 
 l1=Label(home_tab,text="Expenses Detective",bg="grey",width=200,font=("Courier",32),relief=GROOVE)
 l1.place(x=0,y=0,width=600,height=100)
-#l_credit=Label(home_tab,text="Icon made by Eucalyp from www.flaticon.com")
-#l_credit.place(x=0,y=460,width=250,height=15)
+text=Label(home_tab,text="Expenses Detective helps you keep track on your daily expenses. \n\n Under my accounts tab you can list your various bank accounts . \n\n Under Add or update tab you can list your day to day expenses \n\n Queries tab will provide you with graphs and charts regarding your data.",height=500,width=600,anchor=N,background="light grey")
+text.place(x=0,y=100,width=600,height=500)
+l_credit=Label(home_tab,text="Icon made by Eucalyp from www.flaticon.com")
+l_credit.place(x=0,y=460,width=250,height=15)
 
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 #MY ACCOUNTS TAB
-l_net_worth=Label(acc_tab,text="Total Net Worth = "+"$"+str(db_acc.get_net_worth()))
+l_net_worth=ttk.Label(acc_tab,text="Total Net Worth = "+"$"+str(db_acc.get_net_worth()))
 l_net_worth.place(x=0,y=253,width=150,height=20)
 
 tree=ttk.Treeview(acc_tab)
@@ -351,8 +363,15 @@ amount_var=StringVar()
 amount_entry=ttk.Entry(acc_tab,textvariable=amount_var)
 amount_entry.place(x=425,y=365,width=100,height=25)
 
-commit_transfer=ttk.Button(acc_tab,text="Commit Transfer",command=lambda:transfer_cash(transfer_from_entry_acc.get(),transfer_to_entry_acc.get(),transfer_from_entry_bank.get(),transfer_to_entry_bank.get(),amount_entry.get()))
-commit_transfer.place(x=350,y=400,width=100,height=25)
+commit_transfer=ttk.Button(acc_tab,text="Commit Transfer",command=lambda:transfer_cash(transfer_from_entry_acc.get(),transfer_to_entry_acc.get(),transfer_from_entry_bank.get(),transfer_to_entry_bank.get(),amount_entry.get(),radio_var.get()))
+commit_transfer.place(x=330,y=425,width=100,height=25)
+clear_transfer=ttk.Button(acc_tab,text="Clear Entries",command=clear_transfer_entries )
+clear_transfer.place(x=225,y=425,width=100,height=25)
+radio_var=IntVar()
+radio_option1=ttk.Radiobutton(acc_tab,text="Allow negative amount",variable=radio_var,value=1,command=show_choice)
+radio_option1.place(x=370,y=280,width=150,height=25)
+radio_option2=ttk.Radiobutton(acc_tab,text="Don't Allow negative amount",variable=radio_var,value=2,command=show_choice)
+radio_option2.place(x=370,y=310,width=190,height=25)
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 #ADD\UPDATE TAB
 lb=Listbox(db_tab,height=15,width=30,exportselection=False)
@@ -406,6 +425,9 @@ l4=ttk.Label(db_tab,text="Time stamp :", width= 150, font=('David',10))
 l4.place(x=270 ,y=105,width=150,height=25)
 e3=ttk.Entry(db_tab,state='readonly',textvariable=time_stamp_entry)
 e3.place(x=270,y=130,width=150,height=25)
+
+clear_entries_tab3=ttk.Button(db_tab,text="Clear Entries",command=clear_entries)
+clear_entries_tab3.place(x=375,y=315,width=150,height=25)
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 #QUERIES TAB
 
