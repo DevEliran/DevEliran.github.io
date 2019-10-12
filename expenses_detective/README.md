@@ -1,8 +1,8 @@
 # Expenses Detective
 
-  Expenses Detective is an app that allows to to sumbit your current account on various banks. 
-  It also lets you keep track on your daily spendings. 
-
+   Expenses Detective helps you keep track on your daily expenses.
+   The user can enter a list of his bank accounts and his daily spendings in order to monitor them. 
+   
 ## What I Learned 
 
   - Working with databases (sqlite3)
