@@ -1,10 +1,19 @@
-#README
-(Run front_end_exp_det.py)
-Expenses Detective is an app that allows to to sumbit your current account on various banks. 
-It also lets you keep track on your daily spendings. 
+# Expenses Detective
 
-It's a work in progress  ; Will be updating soon.
+  Expenses Detective is an app that allows to to sumbit your current account on various banks. 
+  It also lets you keep track on your daily spendings. 
 
-11/10/19 update : Transfer cash between your accounts available.
+## What I Learned 
 
-Icon made by Eucalyp from www.flaticon.com
+  - Working with databases (sqlite3)
+  - Creating a GUI
+  - Bind & Event methods
+  
+###  Instructions
+  - Run front_end_exp_det.py
+
+#### Updates
+
+  - 11/10/19 update : Transfer cash between your accounts available.
+  - 12/10/19 update : User can decide if he allows his accounts to be on a deficit.
+
