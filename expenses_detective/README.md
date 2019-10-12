@@ -6,7 +6,7 @@
 ## What I Learned 
 
   - Working with databases (sqlite3)
-  - Creating a GUI
+  - Creating a GUI (tkinter)
   - Bind & Event methods
   
 ###  Instructions
