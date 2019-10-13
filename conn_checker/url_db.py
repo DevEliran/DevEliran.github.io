@@ -46,6 +46,12 @@ class Urls(object):
         table=self.cur.fetchall()
         return table
 
+    def view_urls(self):
+        self.cur.execute("SELECT url FROM urls")
+        urls=self.cur.fetchall()
+        return urls
+
+
     def delete(self,id):
         self.cur.execute("DELETE FROM urls WHERE id=?",(id,))
         self.con.commit()
