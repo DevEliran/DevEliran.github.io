@@ -37,7 +37,7 @@ class Urls(object):
     def insert_url(self,url):
         time_stamp=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         init_conn=self.first_conn_check(url)
-        self.cur.execute("INSERT INTO urls VALUES (NULL,?,?,?,?)",(url,init_conn,init_conn,time_stamp))
+        self.cur.execute("INSERT INTO urls VALUES (NULL,?,?,?,?)",(url,0,init_conn,time_stamp))
         self.con.commit()
 
 
@@ -52,6 +52,29 @@ class Urls(object):
         return urls
 
 
-    def delete(self,id):
-        self.cur.execute("DELETE FROM urls WHERE id=?",(id,))
+    def delete(self,url):
+        self.cur.execute("DELETE FROM urls WHERE url=?",(url,))
+        self.con.commit()
+
+    def status_changed(self,url):
+        self.cur.execute("SELECT prevS,curS FROM urls WHERE url=?",(url,))
+        status=self.cur.fetchall()
+        print(status)
+        if status[0][0]==status[0][1]:
+            return False
+        return True
+
+    def count_rows(self):
+        self.cur.execute("SELECT COUNT(*) FROM urls")
+        count=self.cur.fetchall()
+        #print(count)
+        return count
+
+    def update_status(self,url):
+        self.cur.execute("SELECT prevS FROM urls WHERE url=?",(url,))
+        prev=self.cur.fetchall()[0][0]
+        self.cur.execute("SELECT curS FROM urls WHERE url=?",(url,))
+        cur=self.cur.fetchall()[0][0]
+
+        self.cur.execute("UPDATE urls SET prevS=? WHERE url=?",(cur,url))
         self.con.commit()
