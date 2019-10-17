@@ -90,4 +90,4 @@ for filename in os.listdir('./cogs'):#iterates through all the files in cogs fol
 
 
 
-bot.run('NjMzNzI2OTMzMTA0MDY2NTY5.XaY0HQ.sfFZ0n_oDqz-0X5WWpp7fjzh4Oc')
+bot.run('Enter your token key ')
