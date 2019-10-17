@@ -1,8 +1,16 @@
-#READ ME 
+# Snake
 
-Open snake.py and run it. 
-Modules imported : pygame , math , tkinter, random , imghdr , cv2. 
+Classic snake game with a bit of twist.
 
-Don't ruin your surprise and open any jpg / mp3 files. 
+## What I Learned
+  - Creating a game with pygame
+  - Working with images 
 
-Try breaking a new high score. 
+### Instructions 
+  - Run snake.py
+  - Don't open secret folder
+
+#### Updates
+
+  - 17/10/19 Update : Displaying more stats relating to the game.
+
