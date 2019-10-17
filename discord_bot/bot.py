@@ -53,7 +53,7 @@ async def on_command_error(ctx, error):
 @bot.event
 async def on_ready():
     #name of the loop.start
-    await bot.change_presence(status=discord.Status.idle , activity=discord.Game('His Bubil'))
+    await bot.change_presence(status=discord.Status.idle , activity=discord.Game('with cogs'))
     print('Bot is online.')
 
 @bot.command()
@@ -90,4 +90,4 @@ for filename in os.listdir('./cogs'):#iterates through all the files in cogs fol
 
 
 
-bot.run('Enter your token key ')
+bot.run('NjMzNzI2OTMzMTA0MDY2NTY5.XaghBw.LW98KSeKs5tS7pEpCyOqoxGviHY')
