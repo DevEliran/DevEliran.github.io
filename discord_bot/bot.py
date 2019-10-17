@@ -5,6 +5,9 @@ import json
 from discord.ext import commands,tasks
 from discord.ext.commands import CommandNotFound
 
+
+token=os.getenv('TOKEN')
+
 def get_prefix(bot,message):
     with open ('prefixes.json','r') as f:
         prefixes=json.load(f)
@@ -90,4 +93,4 @@ for filename in os.listdir('./cogs'):#iterates through all the files in cogs fol
 
 
 
-bot.run('NjMzNzI2OTMzMTA0MDY2NTY5.XaghBw.LW98KSeKs5tS7pEpCyOqoxGviHY')
+bot.run(token)

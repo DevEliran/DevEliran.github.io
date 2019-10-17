@@ -1,11 +1,31 @@
 import discord
 import random
+import sys
 from discord.ext import commands
 
 class member_troll(commands.Cog):
 
     def __init__(self,bot):
         self.bot=bot
+
+    @commands.Cog.listener()
+    async def on_message(self,ctx):
+        id=ctx.guild.id
+        guild=self.bot.get_guild(id)
+        if "community_report"==ctx.content.lower():
+            online,idle,offline=0,0,0
+            for i in guild.members:
+                if str(i.status)=='online':
+                    online+=1
+                elif str(i.status)=='offline':
+                    offline+=1
+                else:
+                    idle+=1
+            await ctx.channel.send(f"```Online : {online}\nIdle : {idle}\nOffline : {offline} ```")
+
+        if "go out bot"==ctx.content.lower():
+            self.bot.close()
+            sys.exit()
 
     @commands.command()
     async def ping(self,ctx):
