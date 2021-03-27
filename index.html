@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Eliran | CS Student</title>
+		<title>Eliran | Software Developer</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -21,7 +21,7 @@
 							<div class="inner">
 								
 								<h1>Eliran Turgeman</h1>
-								<p>Computer Science Student</p>
+								<p>Software Developer, CS Student - Technion</p>
 								
 							</div>
 						</div>
@@ -29,9 +29,10 @@
 							<ul>
 								<li><a href="#intro">Projects</a></li>
 								<li><a href="#work">Resume</a></li>
+								<li><a href="#blog_entries">Blog Entries</a></li>
 								<li><a href="#about">About</a></li>
-								<li><a href="mailto:dev.eliran96@gmail.com">Contact</a></li>
-						
+								<li><a href="mailto:eliran.turgeman.cs@gmail.com">Contact</a></li>
+								
 							</ul>
 						</nav>
 					</header>
@@ -44,22 +45,44 @@
 								<h2 class="major">Projects</h2>
 
 
-								<span class="image main"><h3>Expenses Detective</h3><img src="images/expDET.JPG" alt="" /></span>
-								<a href="https://github.com/DevEliran/python_projects/tree/master/expenses_detective" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-								<p>Expenses Detective is an app that allows to to submit your current account on various banks. 
-									It also lets you keep track on your daily spendings.</p>
-									<h5>Skills Acquired</h5>
-									<ul>
-										<li>Working with SQL databases</li>
-										<li>Creating a GUI</li>
-										<li>Using Bind & Event methods<br><br><br></li>
-									</ul>	
+								<span><h3>Image Compression</h3></span>
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/Y8h3l4-G5qI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								<a href="https://gist.github.com/DevEliran/5278077e675202ced04efc62ed6a110a" target="_blank" class="icon brands fa-github"><span class="label">Code</span></a></li><br>
+								<!-- <a href="https://www.youtube.com/watch?v=Y8h3l4-G5qI&ab_channel=EliranTurgeman" target="_blank" class="icon fa-facebook-f"><span class="label">Demo</span></a> -->
+								Using SVD decomposition, I created a script that takes an image and shows it compression in a gradual way.<br>
+								I wrote an article on Medium that was published on Cantor's Paradise (Medium biggest math publication) covering the math behind the compression.<br>
+								Just as a side note, the original picture was around 3000 x 2000 and this script compressed it to 50 x 50 and details are quite clear.<br>
+								<a href="https://www.cantorsparadise.com/how-does-compression-work-14c2331d2e25" target="_blank"><span class="label"><b>Article</b></span></a></li><br><br>
 
+								<span><h3>Parallel Game Of Life</h3></span>
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/v58cTzqlT04" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								<a href="https://github.com/DevEliran/Parallel-Game-Of-Life" target="_blank" class="icon brands fa-github"><span class="label">Code</span></a></li><br>
+								Implementing Game Of Life by John Conaway with a twist - there are 8 species instead of one and there are two phases for each generation.
+								I implemented this in a multi-threaded approach while implementing on my own a semaphore and a producer-consumer queue in c++.<br><br>
 
-								<span class="image main"><h3>Motion Detector</h3><img src="images/motionDET.JPG" alt="" /></span>
-								<a href="https://github.com/DevEliran/python_projects/tree/master/motion_detector" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								<span><h3>League of Legends - Win Prediction</h3></span>
+								<a href="https://github.com/DevEliran/LoL---win-predictions" target="_blank" class="icon brands fa-github"><span class="label">Code</span></a></li><br>
+								Using a dataset on the video game League of Legends I created an estimator that predicts the winner of a game based on the stats of it.<br>
+								To predict the winner, first I had to determine which parameters of the game has a good correlation with winning and then training the dataset based on them.<br>
+								This model was able to predict a win accurately in 90.3%.<br>
+								This project was implemented with tensorflow 2.0.<br><br>
+
+								<span><h3>Bash Clone - Linux Command Line</h3></span>
+								<a href="https://github.com/DevEliran/Smash-minimal-shell" target="_blank" class="icon brands fa-github"><span class="label">Code</span></a></li><br>
+								Implementing a new linux command line - ’smash’.<br>
+								This command line natively supports commands such as ls, cd, showpid, chprompt, pwd, jobs, quit, kill, fg, bg including pipes and IO redirection.<br>
+								All other commands are supported through bash.<br><br>
+
+								<span><h3>Github Automation</h3></span>
+								<a href="https://github.com/DevEliran/auto-init-repo" target="_blank" class="icon brands fa-github"><span class="label">Code</span></a></li><br>
+								I created an automation using Github’s API, that allows me to create a github and local repository and link between them while uploading a README file with a single command which is very useful before starting a new project.<br>
+								I also wrote an article on how to achieve such automation and published it on Medium.<br>
+								<a href="https://eliran9692.medium.com/automating-the-creation-of-a-new-project-9b048b699377" target="_blank"><span class="label"><b>Article</b></span></a></li>
+
+								<!-- <span class="image main"><h3>Motion Detector</h3><img src="images/motionDET.JPG" alt="" /></span>
+								<a href="https://github.com/DevEliran/python_projects/tree/master/motion_detector" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li> -->
 								
-								<p>This is a motion detector built with python <br/>
+								<!-- <p>This is a motion detector built with python <br/>
 								After quiting the screen a graph and a csv file will be generated showing the time stamps of objects entering and leaving the frame.</p>
 								<h5>Skills Acquired</h5>
 								<ul>
@@ -98,31 +121,29 @@
 								<ul>
 									<li>Working with images & videos</li>
 									<li>Creating a command line application using arguement parser</li>
-								</ul>
+								</ul> -->
 
 								
 							</article>
 
 						<!-- Work -->
 							<article id="work">
-								<h2 class="major">Resume & Grades</h2>
-							<ul>
-								<li><a href="Eliran's Resume_updated (2).pdf" download="Eliran's_Resume">My Resume</a></li>
-								<li><a href="openu_grades.pdf" download="Eliran's_Results_Sheet">My Results Sheet</a></li>
-							</ul>
+								<h2 class="major">Resume</h2>
+								<a href="eliran_cv.pdf" download="Eliran's_Resume">My Resume</a></li>
 								<p></p>
 							</article>
 
 						<!-- About -->
 							<article id="about">
 								<h2 class="major">About Me </h2>
-								<p>I am a computer science student at the Technion , Israel. <br>
-								I am a highly-motivated, productive and a self learner with a passion for problem solving and learning. </p>
+								<p>I am a Computer Science student at the Technion. <br>
+								I work as a Software Developer in a biology research lab in the Technion.<br>
+							I have an experience of 1 year in python mostly but not limited to these packages: pandas, dask, matplotlib, numpy and, scipy.</p>
 							</article>
 
 						<!-- Contact -->
 							<article id="contact">
-								<a href="mailto:dev.eliran96@gmail.com">Contact</a>
+								<a href="mailto:eliran.turgeman.cs@gmail.com">Contact</a>
 								<h2 class="major">Contact</h2>
 								<form method="post" action="#">
 									<div class="fields">
@@ -146,6 +167,18 @@
 								</form>
 								<ul class="icons">
 									<li><a href="https://github.com/DevEliran" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</article>
+							
+							<article id="blog_entries">
+								<h2 class="major">Blog Entries</h2>
+								<ul>
+									<li><a href="https://www.cantorsparadise.com/from-derangement-to-eulers-number-186a1bf648b5"><span class="label">From Derangement To Euler’s Number</span></a></li>
+									<li><a href="https://www.cantorsparadise.com/how-does-compression-work-14c2331d2e25"><span class="label">How Does Compression Work?</span></a></li>
+									<li><a href="https://www.cantorsparadise.com/approximating-pi-using-needles-3cde110dacd9"><span class="label">Approximating Pi Using Needles</span></a></li>
+									<li><a href="https://www.cantorsparadise.com/city-planning-using-graph-theory-68b273c1672d"><span class="label">City Planning Using Graph Theory</span></a></li>
+									<li><a href="https://levelup.gitconnected.com/create-your-own-system-calls-part-2-process-weights-97d5e66f56f3"><span class="label">Create Your Own System Calls — Process Weights</span></a></li>
+									<li><a href="https://eliran9692.medium.com/automating-the-creation-of-a-new-project-9b048b699377"><span class="label">Automate The Creation Of A New Project</span></a></li>
 								</ul>
 							</article>
 
